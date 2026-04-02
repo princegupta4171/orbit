@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './index.css';
 import Navbar from './components/Navbar.jsx';
 import Hero from './components/Hero.jsx';
@@ -11,8 +12,9 @@ import EScooters from './components/EScooters.jsx';
 import Gallery from './components/Gallery.jsx';
 import Feedback from './components/Feedback.jsx';
 import Footer from './components/Footer.jsx';
+import ScooterDetail from './components/ScooterDetail.jsx';
 
-function App() {
+function Home() {
   return (
     <div className="min-h-screen bg-[var(--color-ink)] text-white">
       <Navbar />
@@ -29,6 +31,17 @@ function App() {
       </main>
       <Footer />
     </div>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/scooter/:id" element={<ScooterDetail />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

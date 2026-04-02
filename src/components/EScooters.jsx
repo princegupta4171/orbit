@@ -1,5 +1,6 @@
 import React from 'react';
 import { FiArrowUpRight } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
 
 const scooters = [
   {
@@ -47,6 +48,7 @@ const scooters = [
 ];
 
 export default function EScooters() {
+  const navigate = useNavigate();
   return (
     <section id="lineup" className="section-shell-light bg-[#f4f8f3]">
       <div className="content-wrap">
@@ -83,15 +85,13 @@ export default function EScooters() {
                   </span>
                 </div>
                 <p className="mt-3 text-sm leading-7 text-slate-600">{scooter.summary}</p>
-                <a
-                  href={scooter.link}
-                  target="_blank"
-                  rel="noreferrer"
+                <button
+                  onClick={() => navigate(`/scooter/${scooter.id}`)}
                   className="orbit-button-dark mt-6 w-full"
                 >
                   View details
                   <FiArrowUpRight />
-                </a>
+                </button>
               </div>
             </article>
           ))}
