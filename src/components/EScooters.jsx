@@ -50,12 +50,12 @@ const scooters = [
 export default function EScooters() {
   const navigate = useNavigate();
   return (
-    <section id="lineup" className="section-shell-light bg-[#f4f8f3]">
+    <section id="lineup" className="section-shell-light flex min-h-screen items-center bg-[#f4f8f3] py-6">
       <div className="content-wrap">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-3xl">
             <span className="eyebrow border-emerald-100 bg-emerald-50 text-emerald-700">Lineup showcase</span>
-            <h2 className="section-title text-slate-950">The scooter grid now feels more editorial, premium, and easier to browse.</h2>
+            <h2 className="section-title text-2xl text-slate-950 sm:text-3xl">The scooter grid now feels more editorial, premium, and easier to browse.</h2>
           </div>
           <p className="max-w-xl text-sm leading-7 text-slate-600 sm:text-base">
             Each model card gets more breathing room, a clearer summary, and stronger product framing
@@ -63,7 +63,7 @@ export default function EScooters() {
           </p>
         </div>
 
-        <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+        <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {scooters.map((scooter) => (
             <article
               key={scooter.id}
@@ -74,20 +74,20 @@ export default function EScooters() {
                 <img
                   src={scooter.image}
                   alt={scooter.name}
-                  className="relative z-10 mx-auto h-64 object-contain transition duration-500 group-hover:scale-105"
+                  className="relative z-10 mx-auto h-40 object-contain transition duration-500 group-hover:scale-105"
                 />
               </div>
-              <div className="p-6">
+              <div className="p-4">
                 <div className="flex items-start justify-between gap-4">
-                  <h3 className="text-2xl font-bold text-slate-900">{scooter.name}</h3>
+                  <h3 className="text-lg font-bold text-slate-900">{scooter.name}</h3>
                   <span className="rounded-full border border-emerald-100 bg-emerald-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-emerald-700">
                     Orbit EV
                   </span>
                 </div>
-                <p className="mt-3 text-sm leading-7 text-slate-600">{scooter.summary}</p>
+                <p className="mt-1 text-xs leading-5 text-slate-600">{scooter.summary}</p>
                 <button
                   onClick={() => navigate(`/scooter/${scooter.id}`)}
-                  className="orbit-button-dark mt-6 w-full"
+                  className="orbit-button-dark mt-3 w-full"
                 >
                   View details
                   <FiArrowUpRight />

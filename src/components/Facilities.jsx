@@ -36,25 +36,25 @@ const facilities = [
 
 export default function Facilities() {
   return (
-    <section className="section-shell bg-[var(--color-surface)]">
+    <section className="section-shell flex min-h-screen items-center bg-[var(--color-surface)] py-6">
       <div className="content-wrap">
         <div className="max-w-3xl">
           <span className="eyebrow">Operational backbone</span>
-          <h2 className="section-title">A more modern website should also show how the brand supports ownership.</h2>
+          <h2 className="section-title text-2xl sm:text-3xl">A more modern website should also show how the brand supports ownership.</h2>
           <p className="section-copy">
             This layer shifts the conversation from just product visuals to the full Orbit ecosystem:
             retail, support, service, supply, and rider confidence after purchase.
           </p>
         </div>
 
-        <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+        <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {facilities.map((item) => (
-            <article key={item.title} className="rounded-[28px] border border-white/10 bg-white/5 p-6">
+            <article key={item.title} className="rounded-[28px] border border-white/10 bg-white/5 p-4">
               <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[rgba(110,220,140,0.14)] text-[var(--color-brand)]">
                 {item.icon}
               </div>
-              <h3 className="mt-6 text-xl font-bold text-white">{item.title}</h3>
-              <p className="mt-3 text-sm leading-7 text-slate-300">{item.desc}</p>
+              <h3 className="mt-3 text-base font-bold text-white">{item.title}</h3>
+              <p className="mt-1 text-xs leading-5 text-slate-300">{item.desc}</p>
             </article>
           ))}
         </div>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { FiArrowRight, FiMenu, FiX } from 'react-icons/fi';
 
 const navLinks = [
@@ -6,14 +7,14 @@ const navLinks = [
   { name: 'Test Ride', href: '#test-drive' },
   { name: 'Why Orbit', href: '#why-orbit' },
   { name: 'Lineup', href: '#lineup' },
-  { name: 'Gallery', href: '#gallery' },
+  { name: 'Gallery', href: '/gallery' },
   { name: 'Feedback', href: '#feedback' },
   { name: 'Contact', href: '#contact' },
 ];
 
 function Brand() {
   return (
-    <a href="#home" className="flex items-center gap-3">
+    <Link to="/" className="flex items-center gap-3">
       <span className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/10 text-sm font-bold uppercase tracking-[0.32em] text-[var(--color-brand-warm)]">
         OR
       </span>
@@ -25,14 +26,26 @@ function Brand() {
           Electric mobility
         </span>
       </span>
-    </a>
+    </Link>
   );
 }
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const closeMenu = () => setMenuOpen(false);
+
+  const handleNav = (e, href) => {
+    if (href.startsWith('/')) return; // let Link handle it
+    e.preventDefault();
+    closeMenu();
+    if (window.location.pathname !== '/') {
+      navigate('/' + href);
+    } else {
+      document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <header className="sticky top-0 z-50 px-4 py-4 sm:px-8">
@@ -42,13 +55,24 @@ export default function Navbar() {
 
           <nav className="hidden items-center gap-7 lg:flex">
             {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className="text-sm font-medium text-slate-300 transition duration-200 hover:text-white"
-              >
-                {link.name}
-              </a>
+              link.href.startsWith('/') ? (
+                <Link
+                  key={link.name}
+                  to={link.href}
+                  className="text-sm font-medium text-slate-300 transition duration-200 hover:text-white"
+                >
+                  {link.name}
+                </Link>
+              ) : (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={(e) => handleNav(e, link.href)}
+                  className="text-sm font-medium text-slate-300 transition duration-200 hover:text-white"
+                >
+                  {link.name}
+                </a>
+              )
             ))}
           </nav>
 
@@ -74,14 +98,25 @@ export default function Navbar() {
           <div className="mt-4 rounded-[28px] border border-white/10 bg-white/5 p-4 lg:hidden">
             <nav className="flex flex-col gap-2">
               {navLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  onClick={closeMenu}
-                  className="rounded-2xl px-4 py-3 text-sm font-medium text-slate-200 transition duration-200 hover:bg-white/5 hover:text-white"
-                >
-                  {link.name}
-                </a>
+                link.href.startsWith('/') ? (
+                  <Link
+                    key={link.name}
+                    to={link.href}
+                    onClick={closeMenu}
+                    className="rounded-2xl px-4 py-3 text-sm font-medium text-slate-200 transition duration-200 hover:bg-white/5 hover:text-white"
+                  >
+                    {link.name}
+                  </Link>
+                ) : (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    onClick={(e) => handleNav(e, link.href)}
+                    className="rounded-2xl px-4 py-3 text-sm font-medium text-slate-200 transition duration-200 hover:bg-white/5 hover:text-white"
+                  >
+                    {link.name}
+                  </a>
+                )
               ))}
             </nav>
             <a href="#test-drive" onClick={closeMenu} className="orbit-button-primary mt-4 w-full">
