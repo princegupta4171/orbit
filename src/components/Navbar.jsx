@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FiArrowRight, FiMenu, FiX } from 'react-icons/fi';
 
 const navLinks = [
@@ -32,45 +32,82 @@ function Brand() {
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeHash, setActiveHash] = useState('');
+  const [visible, setVisible] = useState(true);
+  const lastScroll = React.useRef(0);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      const current = window.scrollY;
+      setVisible(current < lastScroll.current || current < 10);
+      lastScroll.current = current;
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const closeMenu = () => setMenuOpen(false);
 
   const handleNav = (e, href) => {
-    if (href.startsWith('/')) return; // let Link handle it
+    if (href.startsWith('/')) return;
     e.preventDefault();
     closeMenu();
+    setActiveHash(href);
     if (window.location.pathname !== '/') {
-      navigate('/' + href);
+      navigate('/');
+      setTimeout(() => {
+        document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
     } else {
       document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
+  const isActive = (href) => {
+    if (href.startsWith('/')) return location.pathname === href;
+    return activeHash === href;
+  };
+
   return (
-    <header className="sticky top-0 z-50 px-4 py-4 sm:px-8">
+    <header className={`sticky top-0 z-50 px-4 py-4 sm:px-8 transition-transform duration-300 ${visible ? 'translate-y-0' : '-translate-y-full'}`}>
       <div className="mx-auto max-w-6xl rounded-full border border-white/10 bg-[#09120ecf] px-4 py-3 shadow-[0_18px_48px_rgba(3,10,8,0.32)] backdrop-blur-xl sm:px-6">
         <div className="flex items-center justify-between gap-4">
           <Brand />
 
-          <nav className="hidden items-center gap-7 lg:flex">
+          <nav className="hidden items-center gap-1 lg:flex">
             {navLinks.map((link) => (
               link.href.startsWith('/') ? (
                 <Link
                   key={link.name}
                   to={link.href}
-                  className="text-sm font-medium text-slate-300 transition duration-200 hover:text-white"
+                  className={`relative rounded-full px-4 py-2 text-sm font-medium transition duration-200 ${
+                    isActive(link.href)
+                      ? 'bg-[rgba(110,220,140,0.12)] text-[var(--color-brand)]'
+                      : 'text-slate-300 hover:bg-white/5 hover:text-white'
+                  }`}
                 >
                   {link.name}
+                  {isActive(link.href) && (
+                    <span className="absolute inset-x-3 -bottom-0.5 h-px bg-[var(--color-brand)]" />
+                  )}
                 </Link>
               ) : (
                 <a
                   key={link.name}
                   href={link.href}
                   onClick={(e) => handleNav(e, link.href)}
-                  className="text-sm font-medium text-slate-300 transition duration-200 hover:text-white"
+                  className={`relative rounded-full px-4 py-2 text-sm font-medium transition duration-200 ${
+                    isActive(link.href)
+                      ? 'bg-[rgba(110,220,140,0.12)] text-[var(--color-brand)]'
+                      : 'text-slate-300 hover:bg-white/5 hover:text-white'
+                  }`}
                 >
                   {link.name}
+                  {isActive(link.href) && (
+                    <span className="absolute inset-x-3 -bottom-0.5 h-px bg-[var(--color-brand)]" />
+                  )}
                 </a>
               )
             ))}
@@ -103,7 +140,11 @@ export default function Navbar() {
                     key={link.name}
                     to={link.href}
                     onClick={closeMenu}
-                    className="rounded-2xl px-4 py-3 text-sm font-medium text-slate-200 transition duration-200 hover:bg-white/5 hover:text-white"
+                    className={`rounded-2xl px-4 py-3 text-sm font-medium transition duration-200 ${
+                      isActive(link.href)
+                        ? 'bg-[rgba(110,220,140,0.12)] text-[var(--color-brand)]'
+                        : 'text-slate-200 hover:bg-white/5 hover:text-white'
+                    }`}
                   >
                     {link.name}
                   </Link>
@@ -112,7 +153,11 @@ export default function Navbar() {
                     key={link.name}
                     href={link.href}
                     onClick={(e) => handleNav(e, link.href)}
-                    className="rounded-2xl px-4 py-3 text-sm font-medium text-slate-200 transition duration-200 hover:bg-white/5 hover:text-white"
+                    className={`rounded-2xl px-4 py-3 text-sm font-medium transition duration-200 ${
+                      isActive(link.href)
+                        ? 'bg-[rgba(110,220,140,0.12)] text-[var(--color-brand)]'
+                        : 'text-slate-200 hover:bg-white/5 hover:text-white'
+                    }`}
                   >
                     {link.name}
                   </a>
