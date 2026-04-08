@@ -42,12 +42,12 @@ const features = [
 
 export default function ProductFeatures() {
   return (
-    <section id="features" className="section-shell">
+    <section id="features" className="section-shell flex min-h-screen items-center py-6">
       <div className="content-wrap">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-3xl">
             <span className="eyebrow">Product language</span>
-            <h2 className="section-title">Feature communication that feels closer to a premium EV launch page.</h2>
+            <h2 className="section-title text-2xl sm:text-3xl">Feature communication that feels closer to a premium EV launch page.</h2>
           </div>
           <p className="max-w-xl text-sm leading-7 text-slate-300 sm:text-base">
             Richer cards, tighter copy, and better visual contrast make the product section feel more
@@ -55,13 +55,13 @@ export default function ProductFeatures() {
           </p>
         </div>
 
-        <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+        <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {features.map((feature) => (
             <article
               key={feature.title}
               className="group overflow-hidden rounded-[30px] border border-white/10 bg-white/5"
             >
-              <div className="relative h-64 overflow-hidden">
+              <div className="relative h-40 overflow-hidden">
                 <img
                   src={feature.image}
                   alt={feature.title}
@@ -72,9 +72,9 @@ export default function ProductFeatures() {
                   {feature.icon}
                 </div>
               </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-white">{feature.title}</h3>
-                <p className="mt-3 text-sm leading-7 text-slate-300">{feature.desc}</p>
+              <div className="p-4">
+                <h3 className="text-base font-bold text-white">{feature.title}</h3>
+                <p className="mt-1 text-xs leading-5 text-slate-300">{feature.desc}</p>
               </div>
             </article>
           ))}

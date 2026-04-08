@@ -36,28 +36,28 @@ export default function Feedback() {
   };
 
   return (
-    <section id="feedback" className="section-shell-light bg-[#f4f8f3] pb-24">
+    <section id="feedback" className="section-shell-light flex min-h-screen items-center bg-[#f4f8f3] py-6">
       <div className="content-wrap">
         <div className="max-w-3xl">
           <span className="eyebrow border-emerald-100 bg-emerald-50 text-emerald-700">Feedback and proof</span>
-          <h2 className="section-title text-slate-950">A modern site also needs warmer social proof and a cleaner interaction model.</h2>
+          <h2 className="section-title text-2xl text-slate-950 sm:text-3xl">A modern site also needs warmer social proof and a cleaner interaction model.</h2>
           <p className="section-copy-light">
             The review cards and feedback form now feel part of the same visual system, with better
             contrast, cleaner spacing, and stronger trust cues.
           </p>
         </div>
 
-        <div className="mt-10 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="mt-5 grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="grid gap-5">
             {reviews.map((review) => (
-              <article key={review.name} className="panel-surface-light p-6">
+              <article key={review.name} className="panel-surface-light p-4">
                 <div className="flex gap-1 text-amber-400">
                   {Array.from({ length: review.rating }).map((_, index) => (
                     <FaStar key={`${review.name}-${index}`} size={15} />
                   ))}
                 </div>
-                <p className="mt-4 text-sm leading-7 text-slate-600">"{review.text}"</p>
-                <div className="mt-5 flex items-center gap-3">
+                <p className="mt-2 text-xs leading-5 text-slate-600">"{review.text}"</p>
+                <div className="mt-3 flex items-center gap-3">
                   <div className="flex h-11 w-11 items-center justify-center rounded-full bg-slate-950 text-sm font-bold text-white">
                     {review.name[0]}
                   </div>
@@ -70,18 +70,18 @@ export default function Feedback() {
             ))}
           </div>
 
-          <form onSubmit={handleSubmit} className="panel-surface-light p-6 sm:p-8">
+          <form onSubmit={handleSubmit} className="panel-surface-light p-5 sm:p-6">
             <div className="flex items-center gap-3">
               <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-700">
                 <FiMessageSquare size={20} />
               </span>
               <div>
                 <p className="text-xs uppercase tracking-[0.28em] text-emerald-700">Customer voice</p>
-                <h3 className="mt-1 text-3xl font-bold text-slate-950">Share your experience</h3>
+                <h3 className="mt-1 text-2xl font-bold text-slate-950">Share your experience</h3>
               </div>
             </div>
 
-            <div className="mt-6 flex gap-2">
+            <div className="mt-4 flex gap-2">
               {[1, 2, 3, 4, 5].map((star) => (
                 <button
                   key={star}
@@ -97,7 +97,7 @@ export default function Feedback() {
               ))}
             </div>
 
-            <div className="mt-6 grid gap-4">
+            <div className="mt-4 grid gap-3">
               <input
                 placeholder="Your name"
                 value={form.name}
@@ -123,7 +123,7 @@ export default function Feedback() {
               />
             </div>
 
-            <button type="submit" className="orbit-button-dark mt-6 w-full border-slate-900 bg-slate-900">
+            <button type="submit" className="orbit-button-dark mt-4 w-full border-slate-900 bg-slate-900">
               {submitted ? 'Feedback received' : 'Submit feedback'}
             </button>
           </form>

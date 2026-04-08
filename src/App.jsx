@@ -34,11 +34,25 @@ function Home() {
   );
 }
 
+function GalleryPage() {
+  React.useEffect(() => { window.scrollTo(0, 0); }, []);
+  return (
+    <div className="min-h-screen bg-[var(--color-ink)] text-white">
+      <Navbar />
+      <main>
+        <Gallery />
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/gallery" element={<GalleryPage />} />
         <Route path="/scooter/:id" element={<ScooterDetail />} />
       </Routes>
     </BrowserRouter>
